@@ -1,47 +1,40 @@
-// import express from "express"; // import로 가져옴
-// import mysql from "mysql2/promise";
-// import cors from "cors";
-
-// const pool = mysql.createPool({
-//   host: "localhost",
-//   user: "sbsst", // 사용자이름
-//   password: "sbs123414", // 비번
-//   database: "horang", // 데이터 베이스
-//   waitForConnections: true,
-//   connectionLimit: 10,
-//   queueLimit: 0,
-//   dateStrings: true, // 날짜 시간 이뿌게
-// });
-
-// app.use(express.json());
-
-
-
-// const corsOptions = {
-//   origin: "https://cdpn.io",
-//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
-
-// app.use(cors());
-
-
-
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+const db = require("../config/db");
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send({ test: "어쭬" });
+// router.get("/", (req, res) => {
+// res.send({ test: "어쭬" });
+// });
+
+router.get("/", async (req, res) => {
+  let rt = {
+    ok: false,
+    msg: "",
+    result: null,
+  };
+  let conn = null;
+  try {
+    const sql = `SELECT * FROM secretPost`;
+    conn = await db.getConnection();
+    const [result] = await conn.query(sql);
+
+    rt.ok = true;
+    rt.msg = "ok";
+    rt.result = result;
+
+    conn.release();
+  } catch (err) {
+    console.error("select error!");
+    console.error(err);
+    rt.msg = "select error";
+    rt.result = err.message;
+
+    conn.release();
+  }
+  console.log(rt);
+  // res.send({ test: "success" });
+  res.send(rt);
 });
 
-// app.get("/", async(req, res) => {
-//   const[[horangRow]] = await pool.query(
-//       `SELECT * FROM secretPost`
-//   )
-
-//   res.send({test: horangRow})  
-// })
-
 module.exports = router;
-
-
-
