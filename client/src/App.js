@@ -1,18 +1,21 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
 
 function App() {
-  const callApi = async () => {
-    axios.get("/api").then((res) => {
-      console.log(res.data.test);
-    });
+  const [babo,setBabo] = useState(""); 
+  const callApi = async()=>{
+    axios.get("/api").then((res)=>{setBabo(res.data.test)});
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     callApi();
   }, []);
-
-  return <div className="App">...</div>;
+  
+  return (
+    <div className="App">
+	    {babo}
+    </div>
+  );
 }
 
 export default App;
