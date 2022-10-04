@@ -2,9 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [babo,setBabo] = useState(""); 
+  const [babo,setBabo] = useState([]); 
   const callApi = async()=>{
-    axios.get("/api").then((res)=>{setBabo(res.data.test)});
+    await axios.get("/api").then((res)=>{
+      console.log("메롱",res);
+      if(res.data.ok === true){setBabo(res.data.result)}
+      else{
+        console.log("데이터 없는데~");
+      }
+      });
   };
 
   useEffect(()=>{
@@ -13,7 +19,7 @@ function App() {
   
   return (
     <div className="App">
-	    {babo}
+	    {babo[0].title}
     </div>
   );
 }
