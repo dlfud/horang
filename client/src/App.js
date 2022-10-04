@@ -1,28 +1,32 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import BoardInput from "./component/BoardInput";
 
 function App() {
-  const [babo, setBabo] = useState([]);
-  const callApi = async () => {
-    await axios.get("/api").then((res) => {
-      console.log("메롱", res);
-      if (res.data.ok === true) {
-        console.log(res.data.result);
-        setBabo(res.data.result);
-      } else {
-        console.log("데이터 없는데~");
-      }
-    });
-  };
+  const [board, setBoard] = useState([]);
 
   useEffect(() => {
-    callApi();
+    const getData = async () => {
+      const boards = await axios({
+        url: "http://localhost:3000/api",
+        method: "GET",
+      });
+      console.log("boards", boards);
+      setBoard(boards.data);
+    };
+
+    getData();
   }, []);
+
+  console.log(board);
+  const nextId = useRef(4);
 
   return (
     <div className="App">
-      {babo[2].title}
-      {babo[2].create_date}
+      {board[0].title}
+      {board[0].create_date}
+
+      <BoardInput board={board} setBoard={setBoard} nextId={nextId} />
     </div>
   );
 }

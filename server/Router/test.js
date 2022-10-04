@@ -8,33 +8,23 @@ const router = express.Router();
 // });
 
 router.get("/", async (req, res) => {
-  let rt = {
-    ok: false,
-    msg: "",
-    result: null,
-  };
-  let conn = null;
-  try {
-    const sql = `SELECT * FROM secretPost`;
-    conn = await db.getConnection();
-    const [result] = await conn.query(sql);
+  const sql = `SELECT * FROM secretPost`;
+  let conn = await db.getConnection();
+  const [boardRow] = await conn.query(sql);
+  console.log(boardRow);
+  conn.release();
 
-    rt.ok = true;
-    rt.msg = "어쩌라고";
-    rt.result = result;
-
-    conn.release();
-  } catch (err) {
-    console.error("select error!");
-    console.error(err);
-    rt.msg = "select error";
-    rt.result = err.message;
-
-    conn.release();
+  if (boardRow === undefined) {
+    res.status(404).json({
+      resultCode: "F-1",
+      msg: "404 not found",
+    });
+    return;
   }
-  console.log(rt);
-  // res.send({ test: "success" });
-  res.send(rt);
+  //   console.error("select error!");
+  //   console.error(err);
+
+  res.send(boardRow);
 });
 
 router.post("/create", async (req, res) => {
