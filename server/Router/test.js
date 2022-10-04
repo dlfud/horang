@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     conn = await db.getConnection();
     const [result] = await conn.query(sql);
 
-    rt.ok = false;
+    rt.ok = true;
     rt.msg = "어쩌라고";
     rt.result = result;
 
