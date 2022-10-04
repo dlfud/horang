@@ -37,16 +37,15 @@ router.get("/", async (req, res) => {
   res.send(rt);
 });
 
-
-router.post("/create", async (req, res) =>{
+router.post("/create", async (req, res) => {
   let conn = null;
-  try{
+  try {
     const sql = `INSERT INTO secretPost SET title=${req.title}, content = ${req.content}`;
     conn = await db.getConnection();
     await conn.query(sql);
 
     conn.release();
-  } catch(err){
+  } catch (err) {
     console.error("insert error!");
     console.error(err);
     conn.release();
