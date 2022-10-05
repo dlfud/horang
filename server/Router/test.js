@@ -8,9 +8,8 @@ const router = express.Router();
 // });
 
 router.get("/", async (req, res) => {
-  const sql = `SELECT * FROM secretPost`;
   let conn = await db.getConnection();
-  const [boardRow] = await conn.query(sql);
+  const [boardRow] = await conn.query(`SELECT * FROM secretPost`);
   console.log(boardRow);
   conn.release();
 
@@ -28,11 +27,28 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
+  const {title, content} = req.body;
+
+  if(!title){
+    res.status(400).json({
+      resultCode:"F-1",
+      msg:"title required",
+    });
+    return;
+  }
+  if(!content){
+    res.status(400).json({
+      resultCode:"F-1",
+      msg:"title required",
+    });
+    return;
+  }
+
+
   let conn = null;
   try {
-    const sql = `INSERT INTO secretPost SET title=${req.title}, content = ${req.content}`;
     conn = await db.getConnection();
-    await conn.query(sql);
+    await conn.query(`INSERT INTO secretPost SET title = ?, content = ?`, [title, content]);
 
     conn.release();
   } catch (err) {
@@ -40,7 +56,12 @@ router.post("/create", async (req, res) => {
     console.error(err);
     conn.release();
   }
-  res.send("님 성공함");
+  // res.send("님 성공함");
+  res.json({
+    resultCode:"S-1",
+    msg:"성공",
+    data: newBoardRow,
+  });
 });
 
 module.exports = router;

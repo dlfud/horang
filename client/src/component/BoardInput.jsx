@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
-const BoardInput = ({ board, setBoard, nextId }) => {
+const BoardInput = ({ }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   return (
@@ -15,9 +15,9 @@ const BoardInput = ({ board, setBoard, nextId }) => {
             method: "POST",
             data: { title, content },
           });
-          setBoard(data.data);
+          setBoards(data.data);
           nextId.current++;
-          setBoard("");
+          setBoards("");
         }}
       >
         <label className="label">

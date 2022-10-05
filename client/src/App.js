@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import BoardInput from "./component/BoardInput";
+import BoardList from "./component/BoardList";
+import {NavLink} from "react-router-dom";
+
 
 function App() {
-  const [board, setBoard] = useState([]);
+  const [boards, setBoards] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -12,21 +14,19 @@ function App() {
         method: "GET",
       });
       console.log("boards", boards);
-      setBoard(boards.data);
+      setBoards(boards.data);
     };
 
     getData();
   }, []);
 
-  console.log(board);
+  console.log(boards);
   const nextId = useRef(4);
 
   return (
     <div className="App">
-      {board[0].title}
-      {board[0].create_date}
-
-      <BoardInput board={board} setBoard={setBoard} nextId={nextId} />
+      <BoardList boards={boards}/>
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " click" : "")} to='/create'>생성</NavLink>
     </div>
   );
 }
