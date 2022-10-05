@@ -12,7 +12,6 @@ root.render(
     <Router>
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/api" element={<Home />}></Route>
         <Route path="/create" element={<Create />}></Route>
       </Routes>
     </Router>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import BoardInput from "../component/BoardInput";
 import BoardList from "../component/BoardList";
 import Layout from "../layout/Layout";
 
@@ -26,7 +27,8 @@ const Home = ({}) => {
   return (
     <Layout>
       <div>
-        <Link to="/create">Create</Link>
+        {/* <Link to="/create">Create</Link> */}
+        <BoardInput boards={boards} setBoards={setBoards} nextId={nextId} />
         <BoardList boards={boards} />
       </div>
     </Layout>

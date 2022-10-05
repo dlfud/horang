@@ -27,28 +27,30 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  const {title, content} = req.body;
-
-  if(!title){
+  const { title, content } = req.body;
+  console.log("들어옴");
+  if (!title) {
     res.status(400).json({
-      resultCode:"F-1",
-      msg:"title required",
+      resultCode: "F-1",
+      msg: "title required",
     });
     return;
   }
-  if(!content){
+  if (!content) {
     res.status(400).json({
-      resultCode:"F-1",
-      msg:"title required",
+      resultCode: "F-1",
+      msg: "title required",
     });
     return;
   }
-
 
   let conn = null;
   try {
     conn = await db.getConnection();
-    await conn.query(`INSERT INTO secretPost SET title = ?, content = ?`, [title, content]);
+    await conn.query(`INSERT INTO secretPost SET title = ?, content = ?`, [
+      title,
+      content,
+    ]);
 
     conn.release();
   } catch (err) {
@@ -58,9 +60,8 @@ router.post("/create", async (req, res) => {
   }
   // res.send("님 성공함");
   res.json({
-    resultCode:"S-1",
-    msg:"성공",
-    data: newBoardRow,
+    resultCode: "S-1",
+    msg: "성공",
   });
 });
 
