@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
-const BoardInput = ({ }) => {
+const BoardInput = ({ boards, setBoards, nextId }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   return (
