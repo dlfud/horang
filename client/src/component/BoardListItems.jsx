@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const BoardListItems = ({ board }) => {
   const { id, title, content, create_date } = board;
@@ -8,6 +9,7 @@ const BoardListItems = ({ board }) => {
       <th>{title}</th>
       <th>{content}</th>
       <th>{create_date}</th>
+      <th>{<Link to={`/update/${id}`}>update</Link>}</th>
     </tr>
   );
 };
