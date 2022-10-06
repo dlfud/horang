@@ -27,8 +27,6 @@ const Home = ({}) => {
   return (
     <Layout>
       <div>
-        {/* <Link to="/create">Create</Link> */}
-        <BoardInput boards={boards} setBoards={setBoards} nextId={nextId} />
         <BoardList boards={boards} />
       </div>
     </Layout>

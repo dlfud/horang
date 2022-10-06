@@ -58,11 +58,11 @@ router.post("/create", async (req, res) => {
     console.error(err);
     conn.release();
   }
-  // res.send("님 성공함");
-  res.json({
-    resultCode: "S-1",
-    msg: "성공",
-  });
+  res.send("success");
+  // res.json({
+  //   resultCode: "S-1",
+  //   msg: "성공",
+  // });
 });
 
 module.exports = router;
