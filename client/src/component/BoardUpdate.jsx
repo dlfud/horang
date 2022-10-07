@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Layout from "../layout/Layout";
 import axios from "axios";
 
 const BoardUpdate = () => {
@@ -21,7 +20,6 @@ const BoardUpdate = () => {
       },
     });
     if (doUpdate.data === "success") {
-      navigate("/");
     } else {
       alert("통신실패!");
     }

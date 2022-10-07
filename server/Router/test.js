@@ -90,4 +90,20 @@ router.post("/update", async (req, res) => {
   res.send("success");
 });
 
+//삭제
+router.delete("/delete", async (req, res) => {
+  const {id} = req.body;
+  let conn = null;
+  try{
+    conn = await db.getConnection();
+    await conn.query(`DELETE FROM secretPost WHERE id = ?`, [id]);
+    conn.release();
+  }catch(err){
+    console.error("update error!");
+    console.error(err);
+    conn.release();
+  }
+  res.send("success");
+})
+
 module.exports = router;

@@ -6,6 +6,7 @@ import BoardList from "../component/BoardList";
 import Layout from "../layout/Layout";
 
 const Home = ({}) => {
+  const[delActivity, setDelActivity] = useState("False")
   const [boards, setBoards] = useState([]);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const Home = ({}) => {
     };
 
     getData();
-  }, []);
+  }, [delActivity]);
 
   console.log(boards);
   const nextId = useRef(4);
@@ -27,7 +28,7 @@ const Home = ({}) => {
   return (
     <Layout>
       <div>
-        <BoardList boards={boards} />
+        <BoardList boards={boards} setBoards={setBoards} setDelActivity={setDelActivity}/>
       </div>
     </Layout>
   );
